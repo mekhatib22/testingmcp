@@ -1,0 +1,242 @@
+/* ── Global Reset & Variables ─────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #0f1117;
+  --surface: #1a1d27;
+  --border: #2e3244;
+  --accent: #7c6af7;
+  --accent-hover: #9d90f8;
+  --text: #e2e4ef;
+  --text-muted: #8892a4;
+  --success: #34d399;
+  --error: #f87171;
+  --radius: 10px;
+  --font: 'Segoe UI', system-ui, sans-serif;
+  --mono: 'JetBrains Mono', 'Fira Code', Consolas, monospace;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  min-height: 100dvh;
+}
+
+/* ── Layout ───────────────────────────────────────────────────────────────── */
+.app { max-width: 900px; margin: 0 auto; padding: 1rem; }
+
+header {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  padding: 1rem 0 1.5rem;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 1.5rem;
+}
+
+header h1 { font-size: 1.4rem; font-weight: 700; }
+header span { font-size: .8rem; color: var(--text-muted); }
+
+/* ── Cards ────────────────────────────────────────────────────────────────── */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.card h2 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: .05em;
+}
+
+/* ── Form controls ─────────────────────────────────────────────────────────── */
+label { display: block; font-size: .875rem; color: var(--text-muted); margin-bottom: .35rem; }
+
+select, input, textarea {
+  width: 100%;
+  background: var(--bg);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: .6rem .8rem;
+  font-family: var(--font);
+  font-size: .9rem;
+  outline: none;
+  transition: border-color .15s;
+}
+
+select:focus, input:focus, textarea:focus {
+  border-color: var(--accent);
+}
+
+textarea { resize: vertical; min-height: 100px; font-family: var(--mono); font-size: .85rem; }
+
+.form-row { margin-bottom: .85rem; }
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: .85rem;
+}
+
+@media (max-width: 560px) { .form-grid { grid-template-columns: 1fr; } }
+
+/* ── Buttons ─────────────────────────────────────────────────────────────── */
+button {
+  cursor: pointer;
+  font-family: var(--font);
+  font-size: .9rem;
+  border: none;
+  border-radius: var(--radius);
+  padding: .65rem 1.25rem;
+  transition: background .15s, opacity .15s;
+}
+
+button:disabled { opacity: .45; cursor: not-allowed; }
+
+.btn-primary {
+  background: var(--accent);
+  color: #fff;
+  font-weight: 600;
+}
+.btn-primary:hover:not(:disabled) { background: var(--accent-hover); }
+
+.btn-secondary {
+  background: transparent;
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+}
+.btn-secondary:hover:not(:disabled) { border-color: var(--accent); color: var(--text); }
+
+.btn-sm { padding: .35rem .8rem; font-size: .8rem; }
+
+/* ── Agent chips ──────────────────────────────────────────────────────────── */
+.agent-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem;
+}
+
+.agent-chip {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 99px;
+  padding: .4rem .9rem;
+  font-size: .82rem;
+  cursor: pointer;
+  transition: border-color .15s, background .15s;
+  display: flex;
+  align-items: center;
+  gap: .4rem;
+}
+
+.agent-chip.selected { border-color: var(--accent); background: #2a2460; color: #fff; }
+.agent-chip .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--text-muted); }
+.agent-chip.available .dot { background: var(--success); }
+.agent-chip.unavailable { opacity: .5; }
+
+/* ── Machine chips ────────────────────────────────────────────────────────── */
+.machine-chip {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: .6rem 1rem;
+  cursor: pointer;
+  font-size: .85rem;
+  transition: border-color .15s;
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+}
+.machine-chip.selected { border-color: var(--accent); }
+.machine-chip .name { font-weight: 500; }
+.machine-chip .url { font-size: .75rem; color: var(--text-muted); margin-left: auto; }
+
+/* ── Output ────────────────────────────────────────────────────────────────── */
+.output-block {
+  background: #0a0c12;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1rem;
+  font-family: var(--mono);
+  font-size: .82rem;
+  line-height: 1.6;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+  max-height: 420px;
+  overflow-y: auto;
+}
+
+.output-block.success { border-left: 3px solid var(--success); }
+.output-block.error { border-left: 3px solid var(--error); }
+
+/* ── History ──────────────────────────────────────────────────────────────── */
+.history-item {
+  border-bottom: 1px solid var(--border);
+  padding: .75rem 0;
+  cursor: pointer;
+}
+.history-item:last-child { border-bottom: none; }
+.history-meta { font-size: .78rem; color: var(--text-muted); margin-bottom: .3rem; }
+.history-prompt { font-size: .88rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+/* ── Badge ────────────────────────────────────────────────────────────────── */
+.badge {
+  display: inline-block;
+  padding: .1rem .5rem;
+  border-radius: 99px;
+  font-size: .72rem;
+  font-weight: 600;
+  background: var(--border);
+  color: var(--text-muted);
+}
+.badge.success { background: #0d2e1f; color: var(--success); }
+.badge.error { background: #2e0f0f; color: var(--error); }
+
+/* ── Spinner ──────────────────────────────────────────────────────────────── */
+@keyframes spin { to { transform: rotate(360deg); } }
+.spinner {
+  width: 18px; height: 18px;
+  border: 2px solid var(--border);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin .7s linear infinite;
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: .4rem;
+}
+
+/* ── Tabs ─────────────────────────────────────────────────────────────────── */
+.tabs { display: flex; gap: 0; border-bottom: 1px solid var(--border); margin-bottom: 1rem; }
+.tab-btn {
+  background: none; border: none; border-bottom: 2px solid transparent;
+  color: var(--text-muted); padding: .6rem 1rem; font-size: .88rem;
+  cursor: pointer; margin-bottom: -1px;
+}
+.tab-btn.active { color: var(--text); border-bottom-color: var(--accent); }
+
+/* ── Settings modal ────────────────────────────────────────────────────────── */
+.overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,.65);
+  display: flex; align-items: center; justify-content: center; z-index: 100;
+}
+.modal {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 1.5rem; width: min(480px, 94vw);
+}
+.modal h2 { margin-bottom: 1rem; }
+.modal-footer { display: flex; justify-content: flex-end; gap: .5rem; margin-top: 1rem; }
+
+/* ── Responsive tweaks ─────────────────────────────────────────────────────── */
+@media (max-width: 480px) {
+  header h1 { font-size: 1.1rem; }
+  .card { padding: .9rem; }
+}
